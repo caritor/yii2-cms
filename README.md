@@ -1,7 +1,7 @@
 yii2-cms
 =========
 
-Yii2 cms module will help to add multiple pages, menu areas and menu items. Under a menu area multiple menu's can be added by a drag and drop way to make the process much easy.
+Yii2 cms module will help to add multiple pages, menu areas and menu items. This a kind of wordpress way of managing pages and menu items, i.e, once enough pages and menu items has been built, using a drag and drop feature pages can be used to create a menu tree with multiple menu levels.
 
 Installation
 ------------
@@ -48,9 +48,18 @@ use caritor\cms\widgets\CmsmenuWidget;
 CmsmenuWidget::widget(['area_code' => '{{area_code}}']);
 ```
 
-Routing:
+Url Routing:
 --------
 
-Pages - ```php ?r=cms/pages```
-Menu Areas - ```php ?r=cms/menuarea```
-Menus - ```php ?r=cms/menu/selectarea```
+Pages - 
+```php 
+	?r=cms/pages
+```
+Menu Areas - 
+```php 
+	?r=cms/menuarea
+```
+Menus - 
+```php 
+	?r=cms/menu/selectarea
+```
