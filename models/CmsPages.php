@@ -27,7 +27,7 @@ class CmsPages extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'cms_pages';
+        return 'm_cms_pages';
     }
 
     /**

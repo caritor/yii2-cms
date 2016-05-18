@@ -29,7 +29,7 @@ class CmsMenu extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'cms_menu';
+        return 'm_cms_menu';
     }
 
     /**

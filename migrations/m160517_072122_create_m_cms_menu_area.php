@@ -3,24 +3,23 @@
 use yii\db\Migration;
 
 /**
- * Handles the creation for table `cms_pages`.
+ * Handles the creation for table `m_cms_menu_area`.
  * Has foreign keys to the tables:
  *
  * - `user`
  */
-class m160517_071344_create_cms_pages extends Migration
+class m160517_072122_create_m_cms_menu_area extends Migration
 {
     /**
      * @inheritdoc
      */
     public function up()
     {
-        $this->createTable('cms_pages', [
-            'page_id' => $this->primaryKey(),
-            'title' => $this->string(255)->notNull(),
-            'description' => $this->text(),
+        $this->createTable('m_cms_menu_area', [
+            'area_id' => $this->primaryKey(),
+            'name' => $this->string(32)->notNull(),
             'status' => $this->boolean()->notNull()->defaultValue(1),
-            'menu_title' => $this->string(45),
+            'area_code' => $this->string(32)->notNull()->unique(),
             'created_by' => $this->integer()->notNull(),
             'created_at' => $this->timestamp()->notNull(),
             'updated_at' => $this->timestamp()->notNull(),
@@ -28,15 +27,15 @@ class m160517_071344_create_cms_pages extends Migration
 
         // creates index for column `created_by`
         $this->createIndex(
-            'idx-cms_pages-created_by',
-            'cms_pages',
+            'idx-m_cms_menu_area-created_by',
+            'm_cms_menu_area',
             'created_by'
         );
 
         // add foreign key for table `user`
         $this->addForeignKey(
-            'fk-cms_pages-created_by',
-            'cms_pages',
+            'fk-m_cms_menu_area-created_by',
+            'm_cms_menu_area',
             'created_by',
             'user',
             'id',
@@ -51,16 +50,16 @@ class m160517_071344_create_cms_pages extends Migration
     {
         // drops foreign key for table `user`
         $this->dropForeignKey(
-            'fk-cms_pages-created_by',
-            'cms_pages'
+            'fk-m_cms_menu_area-created_by',
+            'm_cms_menu_area'
         );
 
         // drops index for column `created_by`
         $this->dropIndex(
-            'idx-cms_pages-created_by',
-            'cms_pages'
+            'idx-m_cms_menu_area-created_by',
+            'm_cms_menu_area'
         );
 
-        $this->dropTable('cms_pages');
+        $this->dropTable('m_cms_menu_area');
     }
 }

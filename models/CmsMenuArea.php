@@ -26,7 +26,7 @@ class CmsMenuArea extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'cms_menu_area';
+        return 'm_cms_menu_area';
     }
 
     /**
