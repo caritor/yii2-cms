@@ -1,19 +1,24 @@
 {
     "name": "caritor/yii2-cms",
-    "description": "Yii2 cms module",
+    "description": "Easy manage cms pages and menu items",
+    "homepage": "https://github.com/caritor/yii2-cms/",
+    "keywords": ["yii2", "cms", "menu", "menu-items", "drag-drop"],
     "type": "yii2-extension",
-    "license": "GNU GPLv2",
+    "license": "MIT",
+    "support": {
+        "issues": "https://github.com/caritor/yii2-cms/issues",
+        "source": "https://github.com/caritor/yii2-cms/"
+    },
     "authors": [
         {
-            "name": "VinothP",
+            "name": "Vinoth Pandiyan",
             "email": "vinoth.p@caritorsolutions.com",
-            "homepage":"http://caritorsolutions.com"
+            "role": "Developer"
         }
     ],
-    "minimum-stability": "dev",
     "require": {
         "php": ">=5.4.0",
-        "yiisoft/yii2": ">=2.0.6"
+        "yiisoft/yii2": "*"
     },
     "autoload": {
         "psr-4": {
