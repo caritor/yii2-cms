@@ -18,13 +18,13 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```
-php composer.phar require --prefer-dist caritor/yii2-cms "@dev"
+php composer.phar require --prefer-dist caritor/yii2-cms "dev-master"
 ```
 
 or add
 
 ```
-"cms/yii2-cms": "@dev"
+"cms/yii2-cms": "dev-master"
 ```
 
 to the require section of your `composer.json` file.
