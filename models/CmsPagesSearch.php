@@ -79,7 +79,7 @@ class CmsPagesSearch extends CmsPages
         $query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'description', $this->description])
             ->andFilterWhere(['like', 'username', $this->created_by])
-            ->andFilterWhere(['like', 'cms_pages.status', $this->status])
+            ->andFilterWhere(['like', 'm_cms_pages.status', $this->status])
             ->andFilterWhere(['like', 'menu_title', $this->menu_title]);
 
         return $dataProvider;
