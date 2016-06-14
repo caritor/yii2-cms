@@ -12,13 +12,12 @@ $(document).ready(function() {
 
     
     $('#nestable').nestable({
-        group: 1,
+        //group: 1,
         //maxDepth:3,
         expandBtnHTML   : '<button class="dd-action" data-action="expand" type="button"><i class="icon-chevron-right"></i></button>',
         collapseBtnHTML : '<button class="dd-action" data-action="collapse" type="button"><i class="icon-chevron-down"></i></button>',
         customActions   : {
             'remove'    : function(item,button) {
-                console.log('test');
                 if( item.hasClass('dd-deleted') ) {
                     item.data('isDeleted',false).removeClass('dd-deleted');
                     button.html('<i class="icon-remove"></i>');
@@ -68,9 +67,9 @@ $(document).ready(function() {
                 message += '</div>';
 
                 // Auto close message after 3 second
-                $('.ajax-messages').html('').append(message);
+                $('.ajax-messages').empty('').append(message);
                 $(".ajax-messages").fadeTo(3000, 500).slideUp(500, function(){
-                    $(this).alert('close');
+                    //$(this).alert('close');
                 }); 
             }
         });

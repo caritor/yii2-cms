@@ -50,76 +50,9 @@ class MenuController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new CmsMenuSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+        return $this->redirect(['selectarea']);
     }
 
-    /**
-     * Displays a single CmsMenu model.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
-    /**
-     * Creates a new CmsMenu model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate()
-    {
-        $model = new CmsMenu();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->menu_id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }
-    }
-
-    /**
-     * Updates an existing CmsMenu model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->menu_id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
-        }
-    }
-
-    /**
-     * Deletes an existing CmsMenu model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
-    }
 
     /**
      * Finds the CmsMenu model based on its primary key value.
@@ -159,6 +92,8 @@ class MenuController extends Controller
 
     public function actionManagemenu()
     {
+        Yii::$app->controller->enableCsrfValidation = false;
+
         $form_data = Yii::$app->request->post('CmsMenu');
         
         $area_id = $form_data['area_id'];
@@ -240,11 +175,6 @@ class MenuController extends Controller
         }
     }
 
-    public function actionIns(){
-        CmsMenu::deleteAll('area_id = 2');
-    }
-
-
     public function actionSavemenu(){
 
         if (Yii::$app->request->isAjax) {
@@ -258,7 +188,7 @@ class MenuController extends Controller
                 CmsMenu::deleteAll('area_id = '.$area_id);
 
                 // Insert New Set Of Menu's
-                $p = $c = $sc = 1;
+                $p = $c = $sc = $sc1 = $sc2 = 1;
                 foreach($menu_items as $parent){
                     $model = new CmsMenu();
                     $model->page_id = $parent['pageid'];
@@ -290,6 +220,37 @@ class MenuController extends Controller
                                     $model->parent_menu_id = $new_child_id;
                                     $model->created_by = Yii::$app->user->id;
                                     $model->save();
+                                    $new_sub_child_id = $model->menu_id;
+
+                                    // Sub Child 1
+                                    if($new_sub_child_id > 0 && isset($sub_children['children'])) {
+                                        foreach ($sub_children['children'] as $sub_children1) {
+                                            $model = new CmsMenu;
+                                            $model->page_id = $sub_children1['pageid'];
+                                            $model->sort_order = $sc1;
+                                            $model->area_id = $area_id;
+                                            $model->parent_menu_id = $new_sub_child_id;
+                                            $model->created_by = Yii::$app->user->id;
+                                            $model->save();
+                                            $new_sub_child_id1 = $model->menu_id;
+
+                                            // Sub Child 2
+                                            if($new_sub_child_id1 > 0 && isset($sub_children1['children'])) {
+                                                foreach ($sub_children1['children'] as $sub_children2) {
+                                                    $model = new CmsMenu;
+                                                    $model->page_id = $sub_children2['pageid'];
+                                                    $model->sort_order = $sc2;
+                                                    $model->area_id = $area_id;
+                                                    $model->parent_menu_id = $new_sub_child_id1;
+                                                    $model->created_by = Yii::$app->user->id;
+                                                    $model->save();
+                                                    $sc2++;
+                                                }
+                                            }
+
+                                            $sc1++;
+                                        }
+                                    }
                                     $sc++;
                                 }
                             }
@@ -302,6 +263,7 @@ class MenuController extends Controller
                 return [
                     'status' => 'success',
                     'message' => '<strong>Success !! </strong>Menu Item/s Succesfully Added / Updated',
+                    'array' => $new_sub_child_id
                 ];
             } else {
                 \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
